@@ -6,6 +6,7 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingFlowParams.SubscriptionUpdateParams
+import com.android.billingclient.api.BillingFlowParams.SubscriptionUpdateParams.ReplacementMode
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.ConsumeResponseListener
@@ -443,6 +444,7 @@ class RNIapModule(
         obfuscatedProfileId: String?,
         offerTokenArr: ReadableArray, // New parameter in V5
         isOfferPersonalized: Boolean, // New parameter in V5
+        replacementMode: Int, // New parameter in V6
         promise: Promise,
     ) {
         val activity = currentActivity
@@ -504,7 +506,13 @@ class RNIapModule(
             if (obfuscatedProfileId != null) {
                 builder.setObfuscatedProfileId(obfuscatedProfileId)
             }
-            if (prorationMode != -1) {
+
+            // if the new replacement mode param is present then use this instead of the old prorationMode
+            // https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.SubscriptionUpdateParams.Builder#setSubscriptionReplacementMode(int)
+            if (replacementMode != -1) {
+                subscriptionUpdateParamsBuilder.setSubscriptionReplacementMode(replacementMode)
+            }
+            else if (prorationMode != -1) {
                 if (prorationMode
                     == BillingFlowParams.ProrationMode.IMMEDIATE_AND_CHARGE_PRORATED_PRICE
                 ) {
