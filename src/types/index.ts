@@ -18,6 +18,15 @@ export enum ProrationModesAndroid {
   UNKNOWN_SUBSCRIPTION_UPGRADE_DOWNGRADE_POLICY = 0,
 }
 
+export enum ReplacementModeAndroid {
+  CHARGE_FULL_PRICE = 5,
+  CHARGE_PRORATED_PRICE = 2,
+  DEFERRED = 6,
+  UNKNOWN_REPLACEMENT_MODE = 0,
+  WITHOUT_PRORATION = 3,
+  WITH_TIME_PRORATION = 1,
+}
+
 export enum PurchaseStateAndroid {
   UNSPECIFIED_STATE = 0,
   PURCHASED = 1,
@@ -256,6 +265,7 @@ export interface RequestSubscriptionAndroid extends RequestPurchaseBaseAndroid {
   purchaseTokenAndroid?: string;
   prorationModeAndroid?: ProrationModesAndroid;
   subscriptionOffers: SubscriptionOffer[];
+  replacementMode?: ReplacementModeAndroid;
 }
 
 export type RequestSubscriptionIOS = RequestPurchaseIOS;
