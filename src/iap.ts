@@ -801,6 +801,7 @@ export const requestSubscription = (
             obfuscatedAccountIdAndroid,
             obfuscatedProfileIdAndroid,
             isOfferPersonalized,
+            replacementMode,
           } = request;
 
           return RNIapModule.buyItemByType(
@@ -812,6 +813,7 @@ export const requestSubscription = (
             obfuscatedProfileIdAndroid,
             subscriptionOffers?.map((so) => so.offerToken),
             isOfferPersonalized ?? false,
+            replacementMode ?? -1,
           );
         }
       },
